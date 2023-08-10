@@ -1,22 +1,28 @@
 import { GetStaticProps } from "next";
 import { databaseId } from "@/config";
 import { getDatabaseItems } from "@/cms/notionClient";
+import {
+  parseDatabaseItems,
+  ParseDatabaseItemType,
+} from "@/utils/parseDatabaseItems";
 
-export default function Home() {
+interface HomeProps {
+  databaseItems: Array<ParseDatabaseItemType>;
+}
+
+export default function Home({ databaseItems }: HomeProps) {
   return <></>;
 }
 
-// getStaticProps: 빌드시에 실행하는 함수
-// getServerSideProps: 유저가 접근시에 실행하는 함수 (실시간)
-
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   if (!databaseId) throw new Error("DATABASE_ID is not defined");
 
   const databaseItems = await getDatabaseItems(databaseId);
-
-  console.log("databaseItems", databaseItems);
+  const parsedDatabaseItems = parseDatabaseItems(databaseItems);
 
   return {
-    props: {},
+    props: {
+      databaseItems: parsedDatabaseItems,
+    },
   };
 };

@@ -9,7 +9,7 @@ export const getDatabaseItems = async (databaseId: string) => {
   const response = await notionClient.databases.query({
     database_id: databaseId,
     filter: {
-      property: "isPublish",
+      property: "isPublished",
       checkbox: {
         equals: true,
       },
