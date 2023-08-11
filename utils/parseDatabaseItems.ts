@@ -4,7 +4,7 @@ import {
   MultiSelectPropertyItemObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 
-export interface ParseDatabaseItemType {
+export interface ParsedDatabaseItemType {
   id: string;
   cover: string;
   createdAt: string;
@@ -18,7 +18,7 @@ export interface ParseDatabaseItemType {
 export const parseDatabaseItems = (
   items: Awaited<ReturnType<typeof getDatabaseItems>>
 ) => {
-  const parsedItems = items.reduce<Array<ParseDatabaseItemType>>(
+  const parsedItems = items.reduce<Array<ParsedDatabaseItemType>>(
     (result, item) => {
       if (!("properties" in item) || item.object !== "page") return result;
 
@@ -41,7 +41,7 @@ export const parseDatabaseItems = (
       const parsedIsPublished =
         isPublished?.type === "checkbox" ? isPublished.checkbox : false;
 
-      const parsedResult: ParseDatabaseItemType = {
+      const parsedResult: ParsedDatabaseItemType = {
         id,
         cover: parsedCover,
         createdAt: created_time,
