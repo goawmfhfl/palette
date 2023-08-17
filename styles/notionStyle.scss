@@ -1,0 +1,56 @@
+:root {
+  --notion-font: inherit;
+}
+
+.notion-page-cover-wrapper {
+  max-width: 1024px;
+}
+
+.notion-page-cover {
+  border-radius: 0.5rem;
+}
+
+.notion-page-has-cover .notion-page-icon-hero.notion-page-icon-image {
+  border-radius: 16rem;
+  overflow: hidden;
+  margin: 0;
+  width: 72px;
+  height: 72px;
+  position: static;
+  margin: 1rem 0;
+}
+
+.notion-page-has-cover {
+  padding-top: 0px;
+  padding-left: 0;
+  padding-right: 0;
+  width: 80%;
+  max-width: 1024px;
+  align-items: center;
+}
+
+.notion-title {
+  text-align: center;
+  word-break: keep-all;
+}
+
+.notion-collection-row-property {
+  text-align: center;
+}
+
+.notion-collection-row-property .notion-property {
+  justify-content: flex-start;
+}
+
+.notion-page-content-has-aside {
+  width: 100%;
+}
+
+.notion-page-content-has-aside .notion-page-content-inner {
+  max-width: none;
+  flex: 1;
+}
+
+.notion-aside {
+  flex: 0;
+}
