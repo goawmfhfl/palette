@@ -5,9 +5,9 @@ import {
 } from "@notionhq/client/build/src/api-endpoints";
 
 export interface ParsedDatabaseItemType {
-  id: string;
+  id: PageObjectResponse["id"];
   cover: string;
-  createdAt: string;
+  createdAt: PageObjectResponse["created_time"];
   icon: PageObjectResponse["icon"];
   tags: MultiSelectPropertyItemObjectResponse["multi_select"];
   description: string;
@@ -15,12 +15,14 @@ export interface ParsedDatabaseItemType {
   isPublished: boolean;
 }
 
+// 18분까지 시청완료
 export const parseDatabaseItems = (
   items: Awaited<ReturnType<typeof getDatabaseItems>>
 ) => {
   const parsedItems = items.reduce<Array<ParsedDatabaseItemType>>(
     (result, item) => {
       if (!("properties" in item) || item.object !== "page") return result;
+      if (item.parent.type !== "database_id") return result;
 
       const { id, cover, icon, created_time } = item;
       const { tags, description, title, isPublished } = item.properties;
