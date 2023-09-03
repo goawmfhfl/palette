@@ -19,8 +19,6 @@ export interface TagPageProps {
 }
 
 const TagPage = ({ databaseItems, tagName, totalLength }: TagPageProps) => {
-  console.log("databaseItems", databaseItems);
-
   return (
     <div>
       <TagHeroSection title={`#${tagName}`} />
