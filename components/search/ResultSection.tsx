@@ -2,9 +2,11 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { GetSearchResponse } from "@/pages/api/getSearchFromNotion";
 import CardList from "../card/CardList";
+import LoadingSpinner from "../common/LoadingSpinner";
 
-const ReesultSection = () => {
+const ResultSection = () => {
   const { query } = useRouter();
+
   const searchQuery = query.query?.toString();
 
   const { data, isLoading, error } = useSWR(
@@ -22,7 +24,7 @@ const ReesultSection = () => {
 
   return (
     <section>
-      <div className='w-4/5 max-w-5xl mx-auto my-16 min-h-screen'>
+      <div className="w-4/5 max-w-5xl mx-auto my-16 min-h-screen">
         {data ? <CardList cardItems={data} /> : null}
         {isLoading ? <LoadingIndicator /> : null}
         {error ? <ErrorIndicator error={error} /> : null}
@@ -31,11 +33,11 @@ const ReesultSection = () => {
   );
 };
 
-export default ReesultSection;
+export default ResultSection;
 
 const LoadingIndicator = () => {
   return (
-    <div className='flex justify-center items-center my-16'>
+    <div className="flex justify-center items-center my-16">
       <LoadingSpinner />
     </div>
   );
