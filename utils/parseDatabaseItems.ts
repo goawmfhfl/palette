@@ -22,17 +22,17 @@ export const parseDatabaseItems = (
   const parsedItems = items.reduce<Array<ParsedDatabaseItemType>>(
     (result, item) => {
       if (!("properties" in item) || item.object !== "page") return result;
-      // database_id는 데이터 베이스의 아이템을 불러온다.
-      // block_id는 데이터베이스 그 자체를 가져오는 행위이다.
       if (item.parent.type !== "database_id") return result;
 
       const { id, cover, icon, created_time } = item;
       const { tags, description, title, isPublished } = item.properties;
 
       const parsedCover =
-        (cover?.type === "file" ? cover.file.url : cover?.external.url) ?? "";
+        (cover?.type === "file" ? cover?.file?.url : cover?.external?.url) ??
+        "";
 
-      const parsedTags = tags?.type === "multi_select" ? tags.multi_select : [];
+      const parsedTags =
+        tags?.type === "multi_select" ? tags?.multi_select : [];
 
       const parsedDescription =
         description?.type === "rich_text"
