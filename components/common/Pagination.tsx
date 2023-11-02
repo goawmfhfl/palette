@@ -10,13 +10,17 @@ interface PaginationProps {
 const Pagination = ({ totalPage }: PaginationProps) => {
   const { query } = useRouter();
 
-  const currentPage = Number(query.page) ?? 1;
+  const currentPage = Number(query.page) || 1;
 
   return (
     <div>
-      <ul className='flex flex-row gap-2'>
+      <ul className='flex flex-row gap-2 justify-center items-center'>
         <li>
-          <PaginationItem to={currentPage - 1} value='&lt;' />
+          <PaginationItem
+            to={currentPage - 1}
+            value='&lt;'
+            disabled={currentPage === 1}
+          />
         </li>
 
         {Array.from(
@@ -32,8 +36,13 @@ const Pagination = ({ totalPage }: PaginationProps) => {
             />
           ) : null
         )}
+
         <li>
-          <PaginationItem to={currentPage + 1} value='&gt;' />
+          <PaginationItem
+            to={currentPage + 1}
+            value='&gt;'
+            disabled={currentPage === totalPage}
+          />
         </li>
       </ul>
     </div>
@@ -55,9 +64,28 @@ const PaginationItem = ({
   disabled = false,
   active = false,
 }: PaginationItemProps) => {
+  const { pathname, query } = useRouter();
+  const paginationRoute = "/page/[page]";
+
+  const extendedPathname =
+    pathname.indexOf(paginationRoute) === -1
+      ? `${pathname.replace(/\/$/, "")}${paginationRoute}`
+      : pathname;
+
   return (
-    <Link href={to.toString()}>
-      <button className='' disabled={disabled}>
+    <Link
+      href={{
+        pathname: extendedPathname,
+        query: {
+          ...query,
+          page: to,
+        },
+      }}>
+      <button
+        className={`px-4 py-2 rounded-lg hover:bg-gray-100 hover:text-black hover:font-semibold disabled:text-gray-400 disabled:cursor-not-allowed ${
+          active ? "bg-gray-100 text-black font-semibold" : "text-gray-500"
+        }`}
+        disabled={disabled}>
         {value}
       </button>
     </Link>
